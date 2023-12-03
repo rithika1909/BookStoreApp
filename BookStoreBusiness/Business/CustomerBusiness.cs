@@ -1,5 +1,5 @@
 ﻿using BookStoreBusiness.IBusiness;
-using BookStoreCommon.User;
+using BookStoreCommon.Book;
 using BookStoreRepository.IRepository;
 using System;
 using System.Collections.Generic;
@@ -9,70 +9,20 @@ using Utility;
 
 namespace BookStoreBusiness.Business
 {
-    public class UserBusiness : IUserBusiness
+    public class CustomerBusiness : ICustomerBusiness
     {
-        public readonly IUserRepo userRepo;
+        public readonly ICustomerRepo customerRepo;
 
         NlogUtility nlog = new NlogUtility();
-        public UserBusiness(IUserRepo userRepo)
+        public CustomerBusiness(ICustomerRepo customerRepo)
         {
-            this.userRepo = userRepo;
+            this.customerRepo = customerRepo;
         }
-        public Task<int> UserRegistration(UserRegister obj)
+        public Task<int> AddAddress(CustomerDetails obj,int UserId)
         {
             try
             {
-                var result = this.userRepo.UserRegistration(obj);
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-                nlog.LogWarn(ex.Message);
-                throw new Exception(ex.Message);
-            }
-            
-
-        }
-        public string UserLogin(string email, string password)
-        {
-            try
-            {
-                var result = this.userRepo.UserLogin(email, password);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                nlog.LogWarn(ex.Message);
-                throw new Exception(ex.Message);
-            }
-
-
-        }
-
-        public string ForgetPassword(string email)
-        {
-            try
-            {
-                var result = this.userRepo.ForgetPassword(email);
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-                nlog.LogWarn(ex.Message);
-                throw new Exception(ex.Message);
-            }
-
-
-
-        }
-
-        public UserRegister ResetPassword(string email, string newpassword, string confirmpassword)
-        {
-            try
-            {
-                var result = this.userRepo.ResetPassword(email, newpassword, confirmpassword);
+                var result = this.customerRepo.AddAddress(obj, UserId);
                 return result;
 
             }
@@ -83,6 +33,56 @@ namespace BookStoreBusiness.Business
             }
 
         }
+
+        public bool UpdateAddress(CustomerDetails obj,int UserId)
+        {
+            try
+            {
+                var result = this.customerRepo.UpdateAddress(obj, UserId);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                nlog.LogWarn(ex.Message);
+                throw new Exception(ex.Message);
+            }
+
+
+        }
+
+        public bool DeleteAddress(int UserId, int CustomerId)
+        {
+            try
+            {
+                var result = this.customerRepo.DeleteAddress(UserId, CustomerId);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                nlog.LogWarn(ex.Message);
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public IEnumerable<CustomerDetails> GetAddressById(int UserId)
+        {
+            try
+            {
+                var result = this.customerRepo.GetAddressById(UserId);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                nlog.LogWarn(ex.Message);
+                throw new Exception(ex.Message);
+            }
+
+        }
+
 
 
     }

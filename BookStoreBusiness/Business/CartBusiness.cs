@@ -1,5 +1,5 @@
 ﻿using BookStoreBusiness.IBusiness;
-using BookStoreCommon.User;
+using BookStoreCommon.Book;
 using BookStoreRepository.IRepository;
 using System;
 using System.Collections.Generic;
@@ -9,52 +9,21 @@ using Utility;
 
 namespace BookStoreBusiness.Business
 {
-    public class UserBusiness : IUserBusiness
+    public class CartBusiness : ICartBusiness
     {
-        public readonly IUserRepo userRepo;
+        public readonly ICartRepo cartRepo;
 
         NlogUtility nlog = new NlogUtility();
-        public UserBusiness(IUserRepo userRepo)
+        public CartBusiness(ICartRepo cartRepo)
         {
-            this.userRepo = userRepo;
+            this.cartRepo = cartRepo;
         }
-        public Task<int> UserRegistration(UserRegister obj)
+
+        public Task<int> AddToCart(Cart cart, int UserId)
         {
             try
             {
-                var result = this.userRepo.UserRegistration(obj);
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-                nlog.LogWarn(ex.Message);
-                throw new Exception(ex.Message);
-            }
-            
-
-        }
-        public string UserLogin(string email, string password)
-        {
-            try
-            {
-                var result = this.userRepo.UserLogin(email, password);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                nlog.LogWarn(ex.Message);
-                throw new Exception(ex.Message);
-            }
-
-
-        }
-
-        public string ForgetPassword(string email)
-        {
-            try
-            {
-                var result = this.userRepo.ForgetPassword(email);
+                var result = this.cartRepo.AddToCart(cart, UserId);
                 return result;
 
             }
@@ -64,15 +33,43 @@ namespace BookStoreBusiness.Business
                 throw new Exception(ex.Message);
             }
 
-
-
         }
-
-        public UserRegister ResetPassword(string email, string newpassword, string confirmpassword)
+        public IEnumerable<Cart> GetAllCart(int UserId)
         {
             try
             {
-                var result = this.userRepo.ResetPassword(email, newpassword, confirmpassword);
+                var result = this.cartRepo.GetAllCart(UserId);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                nlog.LogWarn(ex.Message);
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public bool UpdateCartList(Cart cartlist, int UserId)
+        {
+            try
+            {
+                var result = this.cartRepo.UpdateCartList(cartlist, UserId);
+                return result;
+
+            }
+            catch (Exception ex)
+            {
+                nlog.LogWarn(ex.Message);
+                throw new Exception(ex.Message);
+            }
+
+        }
+
+        public bool DeleteCart(int BookId)
+        {
+            try
+            {
+                var result = this.cartRepo.DeleteCart(BookId);
                 return result;
 
             }

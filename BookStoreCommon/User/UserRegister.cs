@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace BookStoreCommon.UserRegister
+namespace BookStoreCommon.User
 {
     public class UserRegister
     {
@@ -15,8 +15,9 @@ namespace BookStoreCommon.UserRegister
         [Required(ErrorMessage = "Name is null")]
         public string FullName { get; set; }
 
-        //[Required(ErrorMessage = "Email is null")]
-        //[RegularExpression("^[0-9a-zA-Z]+[.+-_]{0,1}[0-9a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]{2,3}([.][a-zA-Z]{2,3}){0,1}", ErrorMessage = "Email is not valid")]
+        [Required(ErrorMessage = "Email is null")]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression("^[0-9a-zA-Z]+[.+-_]{0,1}[0-9a-zA-Z]+[@][a-zA-Z]+[.][a-zA-Z]{2,3}([.][a-zA-Z]{2,3}){0,1}", ErrorMessage = "Email is not valid")]
         public string EmailId { get; set; }
 
         [Required(ErrorMessage = "Password is null")]
@@ -25,5 +26,9 @@ namespace BookStoreCommon.UserRegister
 
         [Required(ErrorMessage = "Mobile Number is null")]
         public string  MobileNumber { get; set; }
+
+
+        [Required(ErrorMessage = "IsAdmin is null")]
+        public string IsAdmin { get; set; }
     }
 }
